@@ -37,13 +37,20 @@ mixin _$RegisterController on RegisterControllerBase, Store {
       (_$passWordValidComputed ??= Computed<bool?>(() => super.passWordValid,
               name: 'RegisterControllerBase.passWordValid'))
           .value;
-  Computed<String?>? _$repeatPassWordErrorComputed;
+  Computed<bool?>? _$repeatPassWordValidComputed;
 
   @override
-  String? get repeatPassWordError => (_$repeatPassWordErrorComputed ??=
-          Computed<String?>(() => super.repeatPassWordError,
-              name: 'RegisterControllerBase.repeatPassWordError'))
+  bool? get repeatPassWordValid => (_$repeatPassWordValidComputed ??=
+          Computed<bool?>(() => super.repeatPassWordValid,
+              name: 'RegisterControllerBase.repeatPassWordValid'))
       .value;
+  Computed<bool>? _$validFormComputed;
+
+  @override
+  bool get validForm =>
+      (_$validFormComputed ??= Computed<bool>(() => super.validForm,
+              name: 'RegisterControllerBase.validForm'))
+          .value;
 
   final _$nameAtom = Atom(name: 'RegisterControllerBase.name');
 
@@ -121,6 +128,28 @@ mixin _$RegisterController on RegisterControllerBase, Store {
     });
   }
 
+  final _$isLoadingAtom = Atom(name: 'RegisterControllerBase.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  final _$signInAsyncAction = AsyncAction('RegisterControllerBase.signIn');
+
+  @override
+  Future<void> signIn() {
+    return _$signInAsyncAction.run(() => super.signIn());
+  }
+
   final _$RegisterControllerBaseActionController =
       ActionController(name: 'RegisterControllerBase');
 
@@ -180,6 +209,17 @@ mixin _$RegisterController on RegisterControllerBase, Store {
   }
 
   @override
+  void setIsLoading(bool value) {
+    final _$actionInfo = _$RegisterControllerBaseActionController.startAction(
+        name: 'RegisterControllerBase.setIsLoading');
+    try {
+      return super.setIsLoading(value);
+    } finally {
+      _$RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 name: ${name},
@@ -187,11 +227,13 @@ lastName: ${lastName},
 age: ${age},
 password: ${password},
 repeatPassword: ${repeatPassword},
+isLoading: ${isLoading},
 nameValid: ${nameValid},
 lastNameValid: ${lastNameValid},
 ageValid: ${ageValid},
 passWordValid: ${passWordValid},
-repeatPassWordError: ${repeatPassWordError}
+repeatPassWordValid: ${repeatPassWordValid},
+validForm: ${validForm}
     ''';
   }
 }

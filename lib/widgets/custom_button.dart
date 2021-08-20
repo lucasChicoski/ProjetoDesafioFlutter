@@ -7,13 +7,13 @@ class CustomButton extends StatelessWidget {
   });
 
   final Function()? onPressed ;
-  final String? title;
+  final bool? title;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed:onPressed,
-      child: Text(title!),
+      child:title == false ? Text("Enviar") : CircularProgressIndicator(),
     );
   }
 }

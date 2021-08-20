@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 //componentes
@@ -40,75 +41,96 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: Text("Tela de Cadastro"),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomTextField(
-                        hint: 'Nome',
-                        //  errorText: "teste",
-                        textInputType: TextInputType.emailAddress,
-                        onChanged: registerController.setName,
-                        enabled: true,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomTextField(
-                        hint: 'Sobrenome',
-                        //  errorText: "teste",
-
-                        textInputType: TextInputType.emailAddress,
-                        onChanged: registerController.setLastName,
-                        enabled: true,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomTextField(
-                        hint: 'Idade',
-                        //  errorText: "teste",
-                        textInputType: TextInputType.number,
-                        onChanged: registerController.setAge,
-                        enabled: true,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomTextField(
-                        obscure: true,
-                        hint: 'Senha',
-                        suffix: CustomIconButton(
-                          iconData: Icons.visibility,
-                          onTap: () {},
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          hint: 'Nome',
+                          errorText: registerController.nameError,
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: registerController.setName,
+                          enabled: !registerController.isLoading,
                         ),
-                        //  errorText: "teste",
-                        textInputType: TextInputType.emailAddress,
-
-                        onChanged: registerController.setPassword,
-                        enabled: true,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomTextField(
-                        obscure: true,
-                        hint: 'Confirmar senha',
-                        //  errorText: "teste",
-                        textInputType: TextInputType.emailAddress,
-                        onChanged: registerController.setRepeatPassword,
-                        enabled: true,
-                        suffix: CustomIconButton(
-                          iconData: Icons.visibility,
-                          onTap: () {},
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          hint: 'Sobrenome',
+                          errorText: registerController.lastNameError,
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: registerController.setLastName,
+                          enabled: !registerController.isLoading,
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: CustomButton(
-                        title: "Enviar",
-                        onPressed: () {},
-                      ),
-                    )
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          hint: 'Idade',
+                          errorText: registerController.ageError,
+                          textInputType: TextInputType.number,
+                          onChanged: registerController.setAge,
+                          enabled: !registerController.isLoading,
+                        ),
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          obscure: true,
+                          hint: 'Senha',
+                          suffix: CustomIconButton(
+                            iconData: Icons.visibility,
+                            onTap: () {},
+                          ),
+                          errorText: registerController.passWordError,
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: registerController.setPassword,
+                          enabled: !registerController.isLoading,
+                        ),
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          obscure: true,
+                          hint: 'Confirmar senha',
+                          errorText: registerController.repeatPassWordError,
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: registerController.setRepeatPassword,
+                          enabled: !registerController.isLoading,
+                          suffix: CustomIconButton(
+                            iconData: Icons.visibility,
+                            onTap: () {},
+                          ),
+                        ),
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomButton(
+                          title: registerController.isLoading,
+                          onPressed: registerController.validForm &&
+                                  !registerController.isLoading
+                              ? registerController.signIn
+                              : null,
+                          
+                        ),
+                      );
+                    }),
+                    //########################################COMEÇA AQUI
                   ],
                 ),
               ),

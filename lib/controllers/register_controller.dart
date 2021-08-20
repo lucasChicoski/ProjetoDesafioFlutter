@@ -7,11 +7,7 @@ class RegisterController = RegisterControllerBase with _$RegisterController;
 
 abstract class RegisterControllerBase with Store {
   RegisterControllerBase() {
-    autorun((_) {
-      //print(password);
-      print(repeatPassWordError);
-      
-    });
+    autorun((_) {});
   }
   //---Nome
   @observable
@@ -23,7 +19,7 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
-  bool get nameValid => name!.length >= 3;
+  bool get nameValid => name != null && name!.length >= 3;
   String? get nameError {
     if (name == null || nameValid) {
       return null;
@@ -44,7 +40,7 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
-  bool get lastNameValid => lastName!.length >= 1;
+  bool get lastNameValid => lastName != null && lastName!.length >= 1;
   String? get lastNameError {
     if (lastName == null || lastNameValid) {
       return null;
@@ -65,7 +61,7 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
-  bool? get ageValid => int.parse(age!) >= 18;
+  bool? get ageValid => age != null && int.parse(age!) >= 18;
   String? get ageError {
     if (age == null || ageValid!) {
       return null;
@@ -86,7 +82,7 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
-  bool? get passWordValid => password!.isPassWordValid();
+  bool? get passWordValid => password != null && password!.isPassWordValid();
   String? get passWordError {
     if (password == null || passWordValid!) {
       return null;
@@ -107,13 +103,44 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
+  bool? get repeatPassWordValid =>
+      repeatPassword != null && repeatPassword!.isPassWordValid();
+  bool? get validMatchPassWord => repeatPassWordValid! && passWordValid!
+      ? repeatPassword == password
+      : false;
   String? get repeatPassWordError {
-    if (repeatPassword == null || repeatPassword == password) {
+    if (repeatPassword == null || validMatchPassWord!) {
       return null;
     } else if (repeatPassword!.isEmpty) {
       return "Campo obrigatório";
     } else {
       return "As senhas não correspondem";
     }
+  }
+
+  // Parte do botão
+
+  @observable
+  bool isLoading = false;
+
+  @action
+  void setIsLoading(bool value) {
+    isLoading = value;
+  }
+
+  @computed
+  bool get validForm {
+    return validMatchPassWord! && nameValid && lastNameValid && ageValid!;
+  }
+
+  @action
+  Future<void> signIn() async {
+    setIsLoading(true);
+    print("Entrou");
+    await Future.delayed(
+      Duration(seconds: 10),
+    );
+    print("Saiu");
+    setIsLoading(false);
   }
 }
