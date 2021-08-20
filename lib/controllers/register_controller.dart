@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
+
+//Extensões
 import '../extensions/password_extension.dart';
+import '../extensions/email_extension.dart';
+//New Class
 part 'register_controller.g.dart';
 
 class RegisterController = RegisterControllerBase with _$RegisterController;
@@ -9,6 +13,16 @@ abstract class RegisterControllerBase with Store {
   RegisterControllerBase() {
     autorun((_) {});
   }
+
+  //------Show password-----
+  @observable
+  bool passwordVisibilty = true;
+
+  @action
+  void passwordVisibiltyFunc() {
+    passwordVisibilty = !passwordVisibilty;
+  }
+
   //---Nome
   @observable
   String? name;
@@ -48,6 +62,27 @@ abstract class RegisterControllerBase with Store {
       return "Campo Obrigatório";
     } else {
       return "Sobrenome Válido";
+    }
+  }
+
+  //Email
+  @observable
+  String? email;
+
+  @action
+  void setEmail(String value) {
+    email = value;
+  }
+
+  @computed
+  bool get emailValid => email != null && email!.isEmailValid();
+  String? get emailError {
+    if (email == null || emailValid) {
+      return null;
+    } else if (email!.isEmpty) {
+      return "Campo obrigatório";
+    } else {
+      return "Email inválido";
     }
   }
 
@@ -130,7 +165,7 @@ abstract class RegisterControllerBase with Store {
 
   @computed
   bool get validForm {
-    return validMatchPassWord! && nameValid && lastNameValid && ageValid!;
+    return validMatchPassWord! && nameValid && lastNameValid && ageValid! && emailValid;
   }
 
   @action

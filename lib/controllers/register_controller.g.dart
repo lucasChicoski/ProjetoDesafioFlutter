@@ -23,6 +23,13 @@ mixin _$RegisterController on RegisterControllerBase, Store {
       (_$lastNameValidComputed ??= Computed<bool>(() => super.lastNameValid,
               name: 'RegisterControllerBase.lastNameValid'))
           .value;
+  Computed<bool>? _$emailValidComputed;
+
+  @override
+  bool get emailValid =>
+      (_$emailValidComputed ??= Computed<bool>(() => super.emailValid,
+              name: 'RegisterControllerBase.emailValid'))
+          .value;
   Computed<bool?>? _$ageValidComputed;
 
   @override
@@ -52,6 +59,22 @@ mixin _$RegisterController on RegisterControllerBase, Store {
               name: 'RegisterControllerBase.validForm'))
           .value;
 
+  final _$passwordVisibiltyAtom =
+      Atom(name: 'RegisterControllerBase.passwordVisibilty');
+
+  @override
+  bool get passwordVisibilty {
+    _$passwordVisibiltyAtom.reportRead();
+    return super.passwordVisibilty;
+  }
+
+  @override
+  set passwordVisibilty(bool value) {
+    _$passwordVisibiltyAtom.reportWrite(value, super.passwordVisibilty, () {
+      super.passwordVisibilty = value;
+    });
+  }
+
   final _$nameAtom = Atom(name: 'RegisterControllerBase.name');
 
   @override
@@ -79,6 +102,21 @@ mixin _$RegisterController on RegisterControllerBase, Store {
   set lastName(String? value) {
     _$lastNameAtom.reportWrite(value, super.lastName, () {
       super.lastName = value;
+    });
+  }
+
+  final _$emailAtom = Atom(name: 'RegisterControllerBase.email');
+
+  @override
+  String? get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(String? value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
     });
   }
 
@@ -154,6 +192,17 @@ mixin _$RegisterController on RegisterControllerBase, Store {
       ActionController(name: 'RegisterControllerBase');
 
   @override
+  void passwordVisibiltyFunc() {
+    final _$actionInfo = _$RegisterControllerBaseActionController.startAction(
+        name: 'RegisterControllerBase.passwordVisibiltyFunc');
+    try {
+      return super.passwordVisibiltyFunc();
+    } finally {
+      _$RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setName(String value) {
     final _$actionInfo = _$RegisterControllerBaseActionController.startAction(
         name: 'RegisterControllerBase.setName');
@@ -170,6 +219,17 @@ mixin _$RegisterController on RegisterControllerBase, Store {
         name: 'RegisterControllerBase.setLastName');
     try {
       return super.setLastName(value);
+    } finally {
+      _$RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setEmail(String value) {
+    final _$actionInfo = _$RegisterControllerBaseActionController.startAction(
+        name: 'RegisterControllerBase.setEmail');
+    try {
+      return super.setEmail(value);
     } finally {
       _$RegisterControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -222,14 +282,17 @@ mixin _$RegisterController on RegisterControllerBase, Store {
   @override
   String toString() {
     return '''
+passwordVisibilty: ${passwordVisibilty},
 name: ${name},
 lastName: ${lastName},
+email: ${email},
 age: ${age},
 password: ${password},
 repeatPassword: ${repeatPassword},
 isLoading: ${isLoading},
 nameValid: ${nameValid},
 lastNameValid: ${lastNameValid},
+emailValid: ${emailValid},
 ageValid: ${ageValid},
 passWordValid: ${passWordValid},
 repeatPassWordValid: ${repeatPassWordValid},

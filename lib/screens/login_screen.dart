@@ -67,6 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     }),
+
+                    //########################################COMEÇA AQUI
+                    Observer(builder: (_) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: CustomTextField(
+                          hint: 'Email',
+                          errorText: registerController.emailError,
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: registerController.setEmail,
+                          enabled: !registerController.isLoading,
+                        ),
+                      );
+                    }),
                     //########################################COMEÇA AQUI
                     Observer(builder: (_) {
                       return Container(
@@ -85,11 +99,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       return Container(
                         padding: EdgeInsets.all(10),
                         child: CustomTextField(
-                          obscure: true,
+                          obscure: registerController.passwordVisibilty,
                           hint: 'Senha',
                           suffix: CustomIconButton(
-                            iconData: Icons.visibility,
-                            onTap: () {},
+                            iconData: registerController.passwordVisibilty
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            onTap: registerController.passwordVisibiltyFunc,
                           ),
                           errorText: registerController.passWordError,
                           textInputType: TextInputType.emailAddress,
@@ -103,15 +119,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       return Container(
                         padding: EdgeInsets.all(10),
                         child: CustomTextField(
-                          obscure: true,
+                          obscure: registerController.passwordVisibilty,
                           hint: 'Confirmar senha',
                           errorText: registerController.repeatPassWordError,
                           textInputType: TextInputType.emailAddress,
                           onChanged: registerController.setRepeatPassword,
                           enabled: !registerController.isLoading,
                           suffix: CustomIconButton(
-                            iconData: Icons.visibility,
-                            onTap: () {},
+                            iconData: registerController.passwordVisibilty
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            onTap: registerController.passwordVisibiltyFunc,
                           ),
                         ),
                       );
@@ -126,7 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   !registerController.isLoading
                               ? registerController.signIn
                               : null,
-                          
                         ),
                       );
                     }),
