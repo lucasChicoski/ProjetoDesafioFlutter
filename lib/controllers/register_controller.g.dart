@@ -30,11 +30,11 @@ mixin _$RegisterController on RegisterControllerBase, Store {
       (_$emailValidComputed ??= Computed<bool>(() => super.emailValid,
               name: 'RegisterControllerBase.emailValid'))
           .value;
-  Computed<bool?>? _$ageValidComputed;
+  Computed<bool>? _$ageValidComputed;
 
   @override
-  bool? get ageValid =>
-      (_$ageValidComputed ??= Computed<bool?>(() => super.ageValid,
+  bool get ageValid =>
+      (_$ageValidComputed ??= Computed<bool>(() => super.ageValid,
               name: 'RegisterControllerBase.ageValid'))
           .value;
   Computed<bool?>? _$passWordValidComputed;

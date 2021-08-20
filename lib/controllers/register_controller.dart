@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 //Extensões
 import '../extensions/password_extension.dart';
 import '../extensions/email_extension.dart';
+import '../extensions/age_extension.dart';
 //New Class
 part 'register_controller.g.dart';
 
@@ -11,7 +12,9 @@ class RegisterController = RegisterControllerBase with _$RegisterController;
 
 abstract class RegisterControllerBase with Store {
   RegisterControllerBase() {
-    autorun((_) {});
+    autorun((_) {
+      print(ageError);
+    });
   }
 
   //------Show password-----
@@ -96,9 +99,9 @@ abstract class RegisterControllerBase with Store {
   }
 
   @computed
-  bool? get ageValid => age != null && int.parse(age!) >= 18;
+  bool get ageValid => age != null && age!.isAgeValid();
   String? get ageError {
-    if (age == null || ageValid!) {
+    if (age == null || ageValid) {
       return null;
     } else if (age!.isEmpty) {
       return "Campo Obrigatório";
@@ -165,7 +168,11 @@ abstract class RegisterControllerBase with Store {
 
   @computed
   bool get validForm {
-    return validMatchPassWord! && nameValid && lastNameValid && ageValid! && emailValid;
+    return validMatchPassWord! &&
+        nameValid &&
+        lastNameValid &&
+        ageValid &&
+        emailValid;
   }
 
   @action
