@@ -1,8 +1,4 @@
-import 'dart:js';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 //Extensões
@@ -11,7 +7,7 @@ import '../extensions/email_extension.dart';
 import '../extensions/age_extension.dart';
 
 //Screens
-import '../screens/login_screen.dart';
+
 
 //New Class
 part 'register_controller.g.dart';
@@ -20,7 +16,7 @@ class RegisterController = RegisterControllerBase with _$RegisterController;
 
 abstract class RegisterControllerBase with Store {
 
-  LoginScreen loginScreen = GetIt.I<LoginScreen>();
+  
 
   RegisterControllerBase() {
     autorun((_) {
