@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
-
-import './screens/login_screen.dart';
 import 'package:flutter/material.dart';
+//screen
+import 'screens/login_screen.dart';
+//Controller
 import './controllers/register_controller.dart';
 
 //Others Class
@@ -13,6 +14,7 @@ void main() {
 
 void instaces() {
   getIt.registerSingleton<RegisterController>(RegisterController());
+  getIt.registerSingleton<LoginScreen>(LoginScreen());
 }
 
 final getIt = GetIt.I;

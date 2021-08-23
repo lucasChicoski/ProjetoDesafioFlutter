@@ -1,17 +1,10 @@
+import 'package:desafiotelacadastro/widgets/custom_icon_button.dart';
+import 'package:desafiotelacadastro/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
-//componentes
-
-import '../widgets/custom_text_field.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_icon_button.dart';
-
-//controllers
-
-import '../controllers/register_controller.dart';
+//screens
+import 'package:desafiotelacadastro/screens/list_screen.dart';
+import './register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -19,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  RegisterController registerController = GetIt.I<RegisterController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,131 +20,72 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.center,
           margin: const EdgeInsets.all(32),
           child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 16,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: SingleChildScrollView(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Container(
-                      child: Text("Tela de Cadastro"),
+                    CustomTextField(
+                      hint: 'E-mail',
+                      prefix: Icon(Icons.account_circle),
+                      textInputType: TextInputType.emailAddress,
+                      onChanged: (email) {},
+                      enabled: true,
                     ),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          hint: 'Nome',
-                          errorText: registerController.nameError,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: registerController.setName,
-                          enabled: !registerController.isLoading,
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    CustomTextField(
+                      hint: 'Senha',
+                      prefix: Icon(Icons.lock),
+                      obscure: true,
+                      onChanged: (pass) {},
+                      enabled: true,
+                      suffix: CustomIconButton(
+                        radius: 32,
+                        iconData: Icons.visibility,
+                        onTap: () {},
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      height: 44,
+                      // ignore: deprecated_member_use
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32),
                         ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          hint: 'Sobrenome',
-                          errorText: registerController.lastNameError,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: registerController.setLastName,
-                          enabled: !registerController.isLoading,
-                        ),
-                      );
-                    }),
-
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          hint: 'Email',
-                          errorText: registerController.emailError,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: registerController.setEmail,
-                          enabled: !registerController.isLoading,
-                        ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          hint: 'Idade',
-                          errorText: registerController.ageError,
-                          textInputType: TextInputType.number,
-                          onChanged: registerController.setAge,
-                          enabled: !registerController.isLoading,
-                        ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          obscure: registerController.passwordVisibilty,
-                          hint: 'Senha',
-                          suffix: CustomIconButton(
-                            iconData: registerController.passwordVisibilty
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            onTap: registerController.passwordVisibiltyFunc,
-                          ),
-                          errorText: registerController.passWordError,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: registerController.setPassword,
-                          enabled: !registerController.isLoading,
-                        ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomTextField(
-                          obscure: registerController.passwordVisibilty,
-                          hint: 'Confirmar senha',
-                          errorText: registerController.repeatPassWordError,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: registerController.setRepeatPassword,
-                          enabled: !registerController.isLoading,
-                          suffix: CustomIconButton(
-                            iconData: registerController.passwordVisibilty
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            onTap: registerController.passwordVisibiltyFunc,
-                          ),
-                        ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
-                    Observer(builder: (_) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: CustomButton(
-                          title: registerController.isLoading,
-                          onPressed: registerController.validForm &&
-                                  !registerController.isLoading
-                              ? registerController.signIn
-                              : null,
-                        ),
-                      );
-                    }),
-                    //########################################COMEÇA AQUI
+                        child: Text('Login'),
+                        color: Theme.of(context).primaryColor,
+                        disabledColor:
+                            Theme.of(context).primaryColor.withAlpha(100),
+                        textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => ListScreen()));
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      child: ElevatedButton(
+                        child: Text("Cadastrar"),
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ),
-          ),
+              )),
         ),
       ),
     );
