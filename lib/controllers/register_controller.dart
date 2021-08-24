@@ -1,4 +1,3 @@
-
 import 'package:mobx/mobx.dart';
 
 //Extensões
@@ -8,16 +7,12 @@ import '../extensions/age_extension.dart';
 
 //Screens
 
-
 //New Class
 part 'register_controller.g.dart';
 
 class RegisterController = RegisterControllerBase with _$RegisterController;
 
 abstract class RegisterControllerBase with Store {
-
-  
-
   RegisterControllerBase() {
     autorun((_) {
       print(ageError);
@@ -182,6 +177,10 @@ abstract class RegisterControllerBase with Store {
         emailValid;
   }
 
+  //INdo para tela de Login
+  @observable
+  bool registerDone = false;
+
   @action
   Future<void> signIn() async {
     setIsLoading(true);
@@ -189,9 +188,8 @@ abstract class RegisterControllerBase with Store {
     await Future.delayed(
       Duration(seconds: 10),
     );
-    
-     
 
+    registerDone = true;
     print("Saiu");
     setIsLoading(false);
   }

@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 //componentes
 
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_icon_button.dart';
+
+//screens
+
+import './login_screen.dart';
 
 //controllers
 
@@ -19,8 +24,20 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  
   RegisterController registerController = GetIt.I<RegisterController>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    autorun((_) {
+      if(registerController.registerDone){
+        Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

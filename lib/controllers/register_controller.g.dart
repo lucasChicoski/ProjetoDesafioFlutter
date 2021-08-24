@@ -181,6 +181,21 @@ mixin _$RegisterController on RegisterControllerBase, Store {
     });
   }
 
+  final _$registerDoneAtom = Atom(name: 'RegisterControllerBase.registerDone');
+
+  @override
+  bool get registerDone {
+    _$registerDoneAtom.reportRead();
+    return super.registerDone;
+  }
+
+  @override
+  set registerDone(bool value) {
+    _$registerDoneAtom.reportWrite(value, super.registerDone, () {
+      super.registerDone = value;
+    });
+  }
+
   final _$signInAsyncAction = AsyncAction('RegisterControllerBase.signIn');
 
   @override
@@ -290,6 +305,7 @@ age: ${age},
 password: ${password},
 repeatPassword: ${repeatPassword},
 isLoading: ${isLoading},
+registerDone: ${registerDone},
 nameValid: ${nameValid},
 lastNameValid: ${lastNameValid},
 emailValid: ${emailValid},
