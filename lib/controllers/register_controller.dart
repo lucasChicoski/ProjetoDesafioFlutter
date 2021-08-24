@@ -177,7 +177,7 @@ abstract class RegisterControllerBase with Store {
         emailValid;
   }
 
-  //INdo para tela de Login
+  //Indo para tela de Login
   @observable
   bool registerDone = false;
 

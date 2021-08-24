@@ -5,6 +5,7 @@ import 'screens/login_screen.dart';
 //Controller
 import './controllers/register_controller.dart';
 import 'controllers/login_controller.dart';
+import 'controllers/list_controller.dart';
 //Others Class
 
 void main() {
@@ -15,6 +16,7 @@ void main() {
 void instaces() {
   getIt.registerSingleton<RegisterController>(RegisterController());
   getIt.registerSingleton<LoginController>(LoginController());
+  getIt.registerSingleton<ListController>(ListController());
 }
 
 final getIt = GetIt.I;
