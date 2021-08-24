@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           disabledColor:
                               Theme.of(context).primaryColor.withAlpha(100),
                           textColor: Colors.white,
-                          onPressed: loginController.validForm ?  loginController.validationCredentials : null,
+                          onPressed: loginController.validForm ? loginController.validationCredentials : null,
                         ),
                       );
                     }),
